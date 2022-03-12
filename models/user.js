@@ -13,18 +13,15 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true,
-      },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
+        validate: {
+          len: [5, 20],
+        },
       },
-      password_hash: {
+      password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -32,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
+        validate: {
+          isEmail: true,
+          len: [5, 255],
+        },
       },
     },
     {
