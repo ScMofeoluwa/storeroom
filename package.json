@@ -7,7 +7,7 @@
     "dev": "nodemon -r dotenv/config index.js  dotenv_config_path=./.env",
     "db:create": "sequelize-cli db:create",
     "db:migrate": "sequelize-cli db:migrate",
-    "db:g:migration": "sequelize-cli migration:generate --name update_user",
+    "db:g:migration": "sequelize-cli migration:generate --name",
     "db:g:seed": "sequelize-cli seed:generate --name",
     "db:seeds": "sequelize-cli db:seed:all"
   },
