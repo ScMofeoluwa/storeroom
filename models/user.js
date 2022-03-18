@@ -1,14 +1,17 @@
 "use strict";
 const { Model } = require("sequelize");
+const jwt = require("jsonwebtoken");
+const config = require("../config/config");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
+    generateAuthToken() {
+      const access_token = jwt.sign({ id: this.id }, config.atSecret, {
+        expiresIn: "2h",
+      });
+      const refresh_token = jwt.sign({ id: this.id }, config.rtSecret, {
+        expiresIn: "2h",
+      });
+      return { access_token: access_token, refresh_token: refresh_token };
     }
   }
   User.init(
@@ -33,6 +36,10 @@ module.exports = (sequelize, DataTypes) => {
           isEmail: true,
           len: [5, 255],
         },
+      },
+      isVerified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     {
