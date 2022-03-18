@@ -1,16 +1,16 @@
 const express = require("express");
 const error = require("./middleware/error");
 
-const signup = require("./routes/signup");
-const signin = require("./routes/signin");
-const stores = require("./routes/stores");
+const register = require("./routes/register");
+const login = require("./routes/login");
+const stores = require("./routes/store");
 
 const app = express();
 const port = process.env.PORT;
 
 app.use(express.json());
-app.use("/api/signup", signup);
-app.use("/api/signin", signin);
+app.use("/api/register", register);
+app.use("/api/login", login);
 app.use("/api/stores", stores);
 
 app.use(error);

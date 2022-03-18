@@ -1,5 +1,12 @@
 require("dotenv").config();
-const { DB_HOST, DB_USERNAME, DB_PASSWORD } = process.env;
+const {
+  DB_HOST,
+  DB_USERNAME,
+  DB_PASSWORD,
+  SECRET_KEY,
+  ACCESS_TOKEN_SECRET,
+  REFRESH_TOKEN_SECRET,
+} = process.env;
 
 module.exports = {
   development: {
@@ -23,4 +30,7 @@ module.exports = {
     host: DB_HOST,
     dialect: "postgres",
   },
+  rtSecret: REFRESH_TOKEN_SECRET,
+  atSecret: ACCESS_TOKEN_SECRET,
+  secret: SECRET_KEY,
 };
