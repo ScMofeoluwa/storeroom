@@ -1,7 +1,6 @@
 const { User } = require("../models");
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const express = require("express");
 const router = express.Router();
 
@@ -17,10 +16,7 @@ router.post("/", async (req, res) => {
       _.pick(req.body, ["username", "email", "password"])
     );
 
-    const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY);
-    return res
-      .header("x-auth-token", token)
-      .send(_.pick(user, ["id", "username", "email"]));
+    return res.send(_.pick(user, ["id", "username", "email"]));
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
