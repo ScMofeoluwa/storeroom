@@ -1,4 +1,5 @@
 const { User } = require("../models");
+const { sendMail } = require("../utils/sendMail");
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const express = require("express");
@@ -16,7 +17,18 @@ router.post("/", async (req, res) => {
       _.pick(req.body, ["username", "email", "password"])
     );
 
-    return res.send(_.pick(user, ["id", "username", "email"]));
+    const verificationToken = user.generateVerificationToken();
+    try {
+      const kek = sendMail(user, verificationToken);
+      if (kek.messageId) {
+        //console.log(kek);
+        return res
+          .status(200)
+          .send({ message: `Verification mail was sent to ${user.email}` });
+      }
+    } catch (err) {
+      return res.status(400).send("Failed to send email");
+    }
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
