@@ -5,13 +5,19 @@ const config = require("../config/config");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     generateAuthToken() {
-      const access_token = jwt.sign({ id: this.id }, config.atSecret, {
+      const accessToken = jwt.sign({ id: this.id }, config.atSecret, {
         expiresIn: "2h",
       });
-      const refresh_token = jwt.sign({ id: this.id }, config.rtSecret, {
+      const refreshToken = jwt.sign({ id: this.id }, config.rtSecret, {
         expiresIn: "2h",
       });
-      return { access_token: access_token, refresh_token: refresh_token };
+      return { accessToken: accessToken, refreshToken: refreshToken };
+    }
+    generateVerificationToken() {
+      const verificationToken = jwt.sign({ id: this.id }, config.veriSecret, {
+        expiresIn: "24h",
+      });
+      return verificationToken;
     }
   }
   User.init(
