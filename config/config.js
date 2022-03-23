@@ -6,6 +6,7 @@ const {
   SECRET_KEY,
   ACCESS_TOKEN_SECRET,
   REFRESH_TOKEN_SECRET,
+  VERIFICATION_SECRET,
 } = process.env;
 
 module.exports = {
@@ -33,4 +34,5 @@ module.exports = {
   rtSecret: REFRESH_TOKEN_SECRET,
   atSecret: ACCESS_TOKEN_SECRET,
   secret: SECRET_KEY,
+  veriSecret: VERIFICATION_SECRET,
 };
