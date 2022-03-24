@@ -1,16 +1,16 @@
 const { User } = require("../models");
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 
-router.post("/", (req, res) => {
-  const { token } = req.params;
+router.get("/:id", async (req, res) => {
+  const token = req.params.id;
   if (!token) return res.status(422).send({ message: "missing token" });
 
   try {
-    const payload = jwt.verify(token, process.env.SECRET_KEY);
-    req.user = payload;
-  } catch (ex) {
-    res.status(400).send("Invalid token");
+    req.user = jwt.verify(token, process.env.VERIFICATION_SECRET);
+  } catch (err) {
+    return res.status(500).send(err);
   }
 
   try {
@@ -20,8 +20,8 @@ router.post("/", (req, res) => {
         message: "User does not  exists",
       });
     }
-
-    user.verified = true;
+    user.isVerified = true;
+    await user.save();
 
     return res.status(200).send({
       message: "Account Verified",
@@ -30,3 +30,5 @@ router.post("/", (req, res) => {
     return res.status(500).send(ex);
   }
 });
+
+module.exports = router;
