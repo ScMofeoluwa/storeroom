@@ -1,4 +1,6 @@
 const { User } = require("../models");
+const env = process.env.NODE_ENV || "development";
+const config = require("../config/config.js")[env];
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
@@ -8,7 +10,7 @@ router.get("/:id", async (req, res) => {
   if (!token) return res.status(422).send({ message: "missing token" });
 
   try {
-    req.user = jwt.verify(token, process.env.VERIFICATION_SECRET);
+    req.user = jwt.verify(token, config.veriSecret);
   } catch (err) {
     return res.status(500).send(err);
   }

@@ -1,7 +1,8 @@
 "use strict";
 const { Model } = require("sequelize");
+const env = process.env.NODE_ENV || "development";
+const config = require("../config/config.js")[env];
 const jwt = require("jsonwebtoken");
-const config = require("../config/config");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     generateAuthToken() {
