@@ -15,7 +15,12 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         unique: true,
-        validate: { len: [5, 20] },
+        validate: {
+          len: {
+            args: [5, 20],
+            msg: "name must be between 5 and 20 characters",
+          },
+        },
         allowNull: false,
       },
       currency: {
