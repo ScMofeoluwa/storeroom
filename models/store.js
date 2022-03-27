@@ -8,6 +8,11 @@ module.exports = (sequelize, DataTypes) => {
         as: "user",
         onDelete: "CASCADE",
       });
+      this.hasMany(models.Product, {
+        foreignKey: "storeId",
+        as: "products",
+        onDelete: "CASCADE",
+      });
     }
   }
   Store.init(
