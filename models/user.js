@@ -5,6 +5,13 @@ const config = require("../config/config.js")[env];
 const jwt = require("jsonwebtoken");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
+    static associate(models) {
+      this.hasMany(models.Store, {
+        foreignKey: "userId",
+        as: "stores",
+        onDelete: "CASCADE",
+      });
+    }
     generateAuthToken() {
       const accessToken = jwt.sign({ id: this.id }, config.atSecret, {
         expiresIn: "2h",
@@ -37,12 +44,6 @@ module.exports = (sequelize, DataTypes) => {
       password: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-          len: {
-            args: [5, 25],
-            msg: "password must be greater than 5 characters",
-          },
-        },
       },
       email: {
         type: DataTypes.STRING,
@@ -50,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         validate: {
           isEmail: {
-            message: "email must be a valid one",
+            msg: "email must be a valid one",
           },
         },
       },
