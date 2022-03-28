@@ -12,8 +12,8 @@ router.get("/", auth, async (req, res) => {
   res.send(stores);
 });
 
-router.get("/:id", auth, async (req, res) => {
-  const store = await Store.findByPk(req.params.id);
+router.get("/:storeId", auth, async (req, res) => {
+  const store = await Store.findByPk(req.params.storeId);
   if (!store || store.userId !== req.user.id)
     return res
       .status(404)
@@ -42,9 +42,9 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-router.put("/:id", auth, async (req, res) => {
+router.put("/:storeId", auth, async (req, res) => {
   try {
-    let store = await Store.findByPk(req.params.id);
+    let store = await Store.findByPk(req.params.storeId);
     if (!store || store.userId !== req.user.id)
       return res
         .status(404)
@@ -62,8 +62,8 @@ router.put("/:id", auth, async (req, res) => {
   }
 });
 
-router.delete("/:id", auth, async (req, res) => {
-  const store = await Store.findByPk(req.params.id);
+router.delete("/:storeId", auth, async (req, res) => {
+  const store = await Store.findByPk(req.params.storeId);
   if (!store || store.userId !== req.user.id)
     return res
       .status(404)
