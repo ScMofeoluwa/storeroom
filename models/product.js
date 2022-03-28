@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           min: {
-            args: 0,
+            args: [0],
             msg: "minimum price must be 0",
           },
         },
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           min: {
-            args: 0,
+            args: [0],
             msg: "minimum price must be 0",
           },
         },
