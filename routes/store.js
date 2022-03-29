@@ -13,7 +13,9 @@ router.get("/", auth, async (req, res) => {
 });
 
 router.get("/:storeId", auth, async (req, res) => {
-  const store = await Store.findByPk(req.params.storeId);
+  const store = await Store.findByPk(req.params.storeId, {
+    include: { model: Product, as: "products" },
+  });
   if (!store || store.userId !== req.user.id)
     return res
       .status(404)
@@ -44,7 +46,9 @@ router.post("/", auth, async (req, res) => {
 
 router.put("/:storeId", auth, async (req, res) => {
   try {
-    let store = await Store.findByPk(req.params.storeId);
+    let store = await Store.findByPk(req.params.storeId, {
+      include: { model: Product, as: "products" },
+    });
     if (!store || store.userId !== req.user.id)
       return res
         .status(404)
