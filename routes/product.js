@@ -1,4 +1,4 @@
-const { Store, Product } = require("../models");
+const { Store, Product, Image } = require("../models");
 const auth = require("../middleware/auth");
 const _ = require("lodash");
 const express = require("express");
@@ -10,7 +10,10 @@ router.get("/:productId", auth, async (req, res) => {
     return res
       .status(404)
       .send({ message: "Store with the given ID doesn't exist" });
-  const product = await Product.findByPk(req.params.productId);
+  const product = await Product.findByPk(req.params.productId, {
+    include: { model: Image, as: "images" },
+    attributes: { exclude: "imageId" },
+  });
   if (!product || product.storeId !== parseInt(req.params.storeId))
     return res
       .status(404)
@@ -46,7 +49,10 @@ router.put("/:productId", auth, async (req, res) => {
       return res
         .status(404)
         .send({ message: "Store with the given ID doesn't exist" });
-    let product = await Product.findByPk(req.params.productId);
+    let product = await Product.findByPk(req.params.productId, {
+      include: { model: Image, as: "images" },
+      attributes: { exclude: "imageId" },
+    });
     if (!product || product.storeId !== parseInt(req.params.storeId))
       return res
         .status(404)
