@@ -16,6 +16,9 @@ module.exports = {
     database: "storeroom_database_dev",
     host: DB_HOST,
     dialect: "postgres",
+    define: {
+      timestamps: false,
+    },
     rtSecret: REFRESH_TOKEN_SECRET,
     atSecret: ACCESS_TOKEN_SECRET,
     secret: SECRET_KEY,
@@ -27,6 +30,9 @@ module.exports = {
     database: "storeroom_database_test",
     host: DB_HOST,
     dialect: "postgres",
+    define: {
+      timestamps: false,
+    },
   },
   production: {
     username: DB_USERNAME,
@@ -34,5 +40,8 @@ module.exports = {
     database: "storeroom_database_prod",
     host: DB_HOST,
     dialect: "postgres",
+    define: {
+      timestamps: false,
+    },
   },
 };
