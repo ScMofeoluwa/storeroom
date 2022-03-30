@@ -8,8 +8,6 @@ module.exports = {
         {
           name: "MF Inc",
           userId: 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
         },
       ],
       {}

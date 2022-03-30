@@ -10,8 +10,6 @@ module.exports = {
           price: 150,
           quantity: 10,
           storeId: 1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
         },
       ],
       {}

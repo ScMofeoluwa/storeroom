@@ -9,8 +9,6 @@ module.exports = {
           username: "TestUser",
           email: "testuser@gmail.com",
           password: "testing123",
-          createdAt: new Date(),
-          updatedAt: new Date(),
         },
       ],
       {}
