@@ -1,7 +1,7 @@
 const { Store, Product, Image } = require("../models");
 const auth = require("../middleware/auth");
 const upload = require("../utils/multer");
-const { fileUpload } = require("../utils/streamifier");
+const { fileUpload } = require("../services/streamifier");
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 
