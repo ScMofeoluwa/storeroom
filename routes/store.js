@@ -12,11 +12,11 @@ router.get("/", auth, async (req, res) => {
   res.send(stores);
 });
 
-router.get("/:storeId", auth, async (req, res) => {
+router.get("/:storeId", async (req, res) => {
   const store = await Store.findByPk(req.params.storeId, {
     include: { model: Product, as: "products" },
   });
-  if (!store || store.userId !== req.user.id)
+  if (!store)
     return res
       .status(404)
       .send({ message: "Store with the given ID doesn't exist" });

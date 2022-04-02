@@ -4,17 +4,12 @@ const _ = require("lodash");
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 
-router.get("/:productId", auth, async (req, res) => {
-  const store = await Store.findByPk(req.params.storeId);
-  if (!store || store.userId !== req.user.id)
-    return res
-      .status(404)
-      .send({ message: "Store with the given ID doesn't exist" });
+router.get("/:productId", async (req, res) => {
   const product = await Product.findByPk(req.params.productId, {
     include: { model: Image, as: "images" },
     attributes: { exclude: "imageId" },
   });
-  if (!product || product.storeId !== parseInt(req.params.storeId))
+  if (!product)
     return res
       .status(404)
       .send({ message: "Product with given ID doesn't exist" });
@@ -58,7 +53,6 @@ router.put("/:productId", auth, async (req, res) => {
         .status(404)
         .send({ message: "Product with given ID doesn't exist" });
     product = await product.set(req.body);
-    console.log("got here");
     await product.save();
     res.send(product);
   } catch (err) {
