@@ -1,5 +1,6 @@
 const express = require("express");
-const error = require("./middleware/error");
+const logger = require("./utils/logger");
+const morganMiddleware = require("./middleware/morgan.middleware");
 
 const register = require("./routes/register");
 const login = require("./routes/login");
@@ -21,8 +22,8 @@ app.use("/api/:storeId/products", products);
 app.use("/api/:storeId/products/:productId/image", images);
 app.use("/api/order", orders);
 
-app.use(error);
+app.use(morganMiddleware);
 
 app.listen(port, () => {
-  console.log(`Listening on port: ${port}`);
+  logger.info(`Listening on port: ${port}`);
 });
