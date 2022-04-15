@@ -21,7 +21,10 @@ router.post("/", async (req, res) => {
       .status(400)
       .send({ message: "Pending Account. Please Verify Your Email!" });
 
-  const response = user.generateAuthToken();
+  const response = {
+    accessToken: user.generateAccessToken(),
+    refreshToken: user.generateRefreshToken(),
+  };
   res.status(200).send(response);
 });
 
