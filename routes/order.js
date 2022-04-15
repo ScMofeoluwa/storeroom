@@ -1,9 +1,12 @@
-const { Store, Product, Order, ProductOrder } = require("../models");
-const paystack = require("../services/paystack");
+const express = require("express");
 const { v4: uuidv4 } = require("uuid");
 const _ = require("lodash");
-const express = require("express");
+const { Store, Product, Order, ProductOrder } = require("../models");
+const paystack = require("../services/paystack");
 const router = express.Router();
+
+const env = process.env.NODE_ENV || "development";
+const config = require("../config/config.js")[env];
 
 router.post("/", async (req, res) => {
   const store = await Store.findByPk(req.body.storeId);
@@ -44,7 +47,7 @@ router.post("/", async (req, res) => {
     email: req.body.email,
     currency: req.body.currency,
     reference: order.txnRef,
-    callback_url: process.env.PAYSTACK_CALLBACK_URL,
+    callback_url: config.paystackCbUrl,
   };
 
   const data = await paystack.initializePayment(payload);

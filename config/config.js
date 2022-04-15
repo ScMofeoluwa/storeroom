@@ -1,44 +1,41 @@
 require("dotenv").config();
-const {
-  DB_HOST,
-  DB_USERNAME,
-  DB_PASSWORD,
-  SECRET_KEY,
-  ACCESS_TOKEN_SECRET,
-  REFRESH_TOKEN_SECRET,
-  VERIFICATION_SECRET,
-} = process.env;
 
 module.exports = {
   development: {
-    username: DB_USERNAME,
-    password: DB_PASSWORD,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
     database: "storeroom_database_dev",
-    host: DB_HOST,
+    host: process.env.DB_HOST,
     dialect: "postgres",
     define: {
       timestamps: false,
     },
-    rtSecret: REFRESH_TOKEN_SECRET,
-    atSecret: ACCESS_TOKEN_SECRET,
-    secret: SECRET_KEY,
-    veriSecret: VERIFICATION_SECRET,
+    secret: process.env.SECRET_KEY,
+    rtSecret: process.env.REFRESH_TOKEN_SECRET,
+    veriSecret: process.env.VERIFICATION_SECRET,
+    paystackCbUrl: process.env.PAYSTACK_CALLBACK_URL,
+    paystackSecret: process.env.PAYSTACK_TEST_SECRET,
+    cloudinaryKey: process.env.CLOUDINARY_API_KEY,
+    cloudinarySecret: process.env.CLOUDINARY_API_SECRET,
+    cloudName: process.env.CLOUD_NAME,
+    mailUser: process.env.MAIL_USER,
+    mailPass: process.env.MAIL_PASS,
   },
   test: {
-    username: DB_USERNAME,
-    password: DB_PASSWORD,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
     database: "storeroom_database_test",
-    host: DB_HOST,
+    host: process.env.DB_HOST,
     dialect: "postgres",
     define: {
       timestamps: false,
     },
   },
   production: {
-    username: DB_USERNAME,
-    password: DB_PASSWORD,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
     database: "storeroom_database_prod",
-    host: DB_HOST,
+    host: process.env.DB_HOST,
     dialect: "postgres",
     define: {
       timestamps: false,

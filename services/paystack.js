@@ -1,4 +1,6 @@
 const axios = require("axios");
+const env = process.env.NODE_ENV || "development";
+const config = require("../config/config.js")[env];
 
 class Paystack {
   async initializePayment(payload) {
@@ -7,7 +9,7 @@ class Paystack {
       url: "/transaction/initialize",
       method: "POST",
       headers: {
-        Authorization: `Bearer ${process.env.PAYSTACK_TEST_SECRET}`,
+        Authorization: `Bearer ${config.paystackSecret}`,
         "Content-Type": "application/json",
       },
       data: payload,
@@ -21,7 +23,7 @@ class Paystack {
       baseURL: "htpps://api.paystack.co/",
       url: `/transaction/verify/${reference}`,
       headers: {
-        Authorization: `Bearer ${process.env.PAYSTACK_TEST_SECRET}`,
+        Authorization: `Bearer ${config.paystackSecret}`,
       },
     };
     const res = await axios(options);
