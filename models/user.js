@@ -1,8 +1,10 @@
 "use strict";
 const { Model } = require("sequelize");
+const jwt = require("jsonwebtoken");
+
 const env = process.env.NODE_ENV || "development";
 const config = require("../config/config.js")[env];
-const jwt = require("jsonwebtoken");
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
@@ -12,14 +14,15 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
       });
     }
-    generateAuthToken() {
-      const accessToken = jwt.sign({ id: this.id }, config.atSecret, {
+    generateAccessToken() {
+      const accessToken = jwt.sign({ id: this.id }, config.secret, {
         expiresIn: "2h",
       });
-      const refreshToken = jwt.sign({ id: this.id }, config.rtSecret, {
-        expiresIn: "2h",
-      });
-      return { accessToken: accessToken, refreshToken: refreshToken };
+      return accessToken;
+    }
+    generateRefreshToken() {
+      const refreshToken = jwt.sign({ id: this.id }, config.rtSecret, {});
+      return refreshToken;
     }
     generateVerificationToken() {
       const verificationToken = jwt.sign({ id: this.id }, config.veriSecret, {
