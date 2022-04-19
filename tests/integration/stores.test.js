@@ -40,17 +40,25 @@ describe("/api/stores", () => {
 
   describe("POST /", () => {
     let store;
+    let token;
 
     const exec = async () => {
-      const user = await User.findByPk(1);
       return await request(server)
         .post("/api/stores/")
-        .set("Authorization", `Bearer ${user.generateAccessToken()}`)
+        .set("Authorization", `Bearer ${token}`)
         .send(store);
     };
 
-    beforeEach(() => {
+    beforeEach(async () => {
+      const user = await User.findByPk(1);
+      token = user.generateAccessToken();
       store = { name: "MF Stores" };
+    });
+
+    it("should return 401 if user is not logged in", async () => {
+      token = "";
+      const res = await exec();
+      expect(res.status).toBe(401);
     });
 
     it("should return 400 if store already exists", async () => {
@@ -79,19 +87,28 @@ describe("/api/stores", () => {
 
   describe("PUT /:id", () => {
     let newName;
+    let token;
     let id;
 
     const exec = async () => {
       const user = await User.findByPk(1);
       return await request(server)
         .put("/api/stores/" + id)
-        .set("Authorization", `Bearer ${user.generateAccessToken()}`)
+        .set("Authorization", `Bearer ${token}`)
         .send({ name: newName });
     };
 
-    beforeEach(() => {
+    beforeEach(async () => {
+      const user = await User.findByPk(1);
+      token = user.generateAccessToken();
       id = 2;
       newName = "MF Stores Inc.";
+    });
+
+    it("should return 401 if user is not logged in", async () => {
+      token = "";
+      const res = await exec();
+      expect(res.status).toBe(401);
     });
 
     it("should return 404 if store ID is invalid", async () => {
@@ -120,17 +137,26 @@ describe("/api/stores", () => {
 
   describe("DELETE /:id", () => {
     let id;
+    let token;
 
     const exec = async () => {
       const user = await User.findByPk(1);
       return await request(server)
         .delete("/api/stores/" + id)
-        .set("Authorization", `Bearer ${user.generateAccessToken()}`)
+        .set("Authorization", `Bearer ${token}`)
         .send();
     };
 
-    beforeEach(() => {
+    beforeEach(async () => {
+      const user = await User.findByPk(1);
+      token = user.generateAccessToken();
       id = 2;
+    });
+
+    it("should return 401 if user is not logged in", async () => {
+      token = "";
+      const res = await exec();
+      expect(res.status).toBe(401);
     });
 
     it("should return 404 if store ID is invalid", async () => {
@@ -148,7 +174,6 @@ describe("/api/stores", () => {
 
     it("should return 200 if store is deleted", async () => {
       const res = await exec();
-      
     });
   });
 });
