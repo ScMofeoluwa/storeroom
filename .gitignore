@@ -1,4 +1,6 @@
 .env
+.DS_Store
 node_modules
 migrations
+coverage
 logs
