@@ -26,6 +26,7 @@ app.use("/api/order", orders);
 
 app.use(morganMiddleware);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   logger.info(`Listening on port: ${port}`);
 });
+module.exports = server;
