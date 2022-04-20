@@ -30,6 +30,9 @@ module.exports = {
     define: {
       timestamps: false,
     },
+    secret: process.env.SECRET_KEY,
+    rtSecret: process.env.REFRESH_TOKEN_SECRET,
+    veriSecret: process.env.VERIFICATION_SECRET,
   },
   production: {
     username: process.env.DB_USERNAME,
