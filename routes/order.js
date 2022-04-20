@@ -51,7 +51,7 @@ router.post("/", async (req, res) => {
   };
 
   const data = await paystack.initializePayment(payload);
-  return res.send(data);
+  return res.status(200).send(data);
 });
 
 router.get("/paystack/callback", async (req, res) => {
@@ -87,7 +87,7 @@ router.get("/", async (req, res) => {
       },
     },
   });
-  res.send(order);
+  res.status(200).send(order);
 });
 
 module.exports = router;

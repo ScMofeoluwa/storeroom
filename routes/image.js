@@ -17,11 +17,11 @@ router.post("/upload", upload.single("images"), auth, async (req, res) => {
       .status(404)
       .send({ message: "Product with given ID doesn't exist" });
 
-  const imgs = await Image.findAll({
+  const images = await Image.findAll({
     where: { productId: req.params.productId },
   });
   //const imgs = await product.getImages();
-  if (imgs.length >= 5) {
+  if (images.length >= 5) {
     return res.status(400).send({
       message: "max number of images for this product has been exceeded",
     });
@@ -31,7 +31,7 @@ router.post("/upload", upload.single("images"), auth, async (req, res) => {
     url: image.secure_url,
     productId: req.params.productId,
   });
-  res.send({ message: "Image(s) uploaded successfully" });
+  res.status(201).send({ message: "Image(s) uploaded" });
 });
 
 router.delete("/:imageId", auth, async (req, res) => {
@@ -51,6 +51,6 @@ router.delete("/:imageId", auth, async (req, res) => {
       .status(404)
       .send({ message: "Image with the given ID doesn't exist" });
   await image.destroy();
-  res.send({ message: "Image successfully deleted" });
+  res.status(200).send({ message: "Image deleted" });
 });
 module.exports = router;

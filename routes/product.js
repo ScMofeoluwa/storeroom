@@ -14,7 +14,7 @@ router.get("/:productId", async (req, res) => {
       .status(404)
       .send({ message: "Product with given ID doesn't exist" });
 
-  res.send(product);
+  res.status(200).send(product);
 });
 
 router.post("/", auth, async (req, res) => {
@@ -77,7 +77,7 @@ router.delete("/:productId", auth, async (req, res) => {
       .status(404)
       .send({ message: "Product with given ID doesn't exist" });
   await product.destroy();
-  res.send(product);
+  res.send({ message: "Product deleted" });
 });
 
 module.exports = router;

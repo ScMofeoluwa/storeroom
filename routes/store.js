@@ -9,7 +9,7 @@ router.get("/", auth, async (req, res) => {
     where: { userId: req.user.id },
     include: { model: Product, as: "products" },
   });
-  res.send(stores);
+  res.status(200).send(stores);
 });
 
 router.get("/:storeId", async (req, res) => {
@@ -20,7 +20,7 @@ router.get("/:storeId", async (req, res) => {
     return res
       .status(404)
       .send({ message: "Store with the given ID doesn't exist" });
-  res.send(store);
+  res.status(200).send(store);
 });
 
 router.post("/", auth, async (req, res) => {
@@ -73,7 +73,7 @@ router.delete("/:storeId", auth, async (req, res) => {
       .status(404)
       .send({ message: "Store with the given ID doesn't exist" });
   await store.destroy();
-  res.send(store);
+  res.status(200).send({ message: "Store deleted" });
 });
 
 module.exports = router;

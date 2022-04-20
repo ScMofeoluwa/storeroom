@@ -6,7 +6,7 @@ const router = express.Router();
 router.post("/", auth, async (req, res) => {
   const user = await User.findByPk(req.user.id);
   const accessToken = user.generateAccessToken();
-  return res.send({ accessToken: accessToken });
+  return res.status(200).send({ accessToken: accessToken });
 });
 
 module.exports = router;
