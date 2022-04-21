@@ -1,4 +1,4 @@
-const { Store, Product } = require("../models");
+const { Store, Product, Order, ProductOrder } = require("../models");
 const auth = require("../middleware/auth");
 const _ = require("lodash");
 const express = require("express");
@@ -55,7 +55,7 @@ router.put("/:storeId", auth, async (req, res) => {
         .send({ message: "Store with the given ID does't exist" });
     store = await store.set(req.body);
     await store.save();
-    res.send(store);
+    res.status(200).send(store);
   } catch (err) {
     if (err.name === "SequelizeValidationError") {
       return res.status(400).json({
@@ -74,6 +74,28 @@ router.delete("/:storeId", auth, async (req, res) => {
       .send({ message: "Store with the given ID doesn't exist" });
   await store.destroy();
   res.status(200).send({ message: "Store deleted" });
+});
+
+router.get("/:storeId/orders", auth, async (req, res) => {
+  const store = await Store.findByPk(req.params.storeId);
+  if (!store || store.userId !== req.user.id)
+    return res
+      .status(404)
+      .send({ message: "Store with the given ID does't exist" });
+  const order = await Order.findAll({
+    include: {
+      model: Product,
+      as: "products",
+      attributes: ["id", "name"],
+      where: { storeId: store.id },
+      through: {
+        model: ProductOrder,
+        as: "productOrders",
+        attributes: ["quantity"],
+      },
+    },
+  });
+  res.status(200).send(order);
 });
 
 module.exports = router;

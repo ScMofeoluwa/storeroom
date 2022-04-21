@@ -73,21 +73,4 @@ router.get("/paystack/callback", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
-  const order = await Order.findAll({
-    include: {
-      model: Product,
-      as: "products",
-      required: false,
-      attributes: ["id", "name"],
-      through: {
-        model: ProductOrder,
-        as: "productOrders",
-        attributes: ["quantity"],
-      },
-    },
-  });
-  res.status(200).send(order);
-});
-
 module.exports = router;
