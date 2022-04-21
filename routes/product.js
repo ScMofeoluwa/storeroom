@@ -54,7 +54,7 @@ router.put("/:productId", auth, async (req, res) => {
         .send({ message: "Product with given ID doesn't exist" });
     product = await product.set(req.body);
     await product.save();
-    res.send(product);
+    res.status(200).send(product);
   } catch (err) {
     if (err.name === "SequelizeValidationError") {
       return res.status(400).json({
