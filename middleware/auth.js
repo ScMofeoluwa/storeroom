@@ -9,7 +9,7 @@ module.exports = function (req, res, next) {
   const token = bearer[1];
   const url = req.originalUrl.split("/").at(-1);
   const isRefresh = url === "refresh";
-  if (!token) return res.status(401).send("Access Denied: No token provided");
+  if (!token) return res.status(401).send({message: "Access Denied: No token provided"});
   try {
     const payload = isRefresh
       ? jwt.verify(token, config.rtSecret)
@@ -17,6 +17,6 @@ module.exports = function (req, res, next) {
     req.user = payload;
     next();
   } catch (ex) {
-    res.status(400).send("Invalid token");
+    res.status(400).send({message: "Invalid token"});
   }
 };

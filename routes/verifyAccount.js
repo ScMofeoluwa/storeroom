@@ -7,12 +7,12 @@ const router = express.Router();
 
 router.get("/:id", async (req, res) => {
   const token = req.params.id;
-  if (!token) return res.status(422).send({ message: "missing token" });
+  if (!token) return res.status(400).send({ message: "missing token" });
 
   try {
     req.user = jwt.verify(token, config.veriSecret);
   } catch (err) {
-    return res.status(500).send(err);
+    return res.status(400).send(err);
   }
 
   try {
@@ -26,7 +26,7 @@ router.get("/:id", async (req, res) => {
     await user.save();
 
     return res.status(200).send({
-      message: "Account Verified",
+      message: "Account successfully verified",
     });
   } catch (ex) {
     return res.status(500).send(ex);

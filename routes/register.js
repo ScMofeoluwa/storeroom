@@ -8,7 +8,7 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     let user = await User.findOne({ where: { email: req.body.email } });
-    if (user) return res.status(400).send("User already registered");
+    if (user) return res.status(400).send("User with that email already exists");
 
     const salt = await bcrypt.genSalt(10);
     req.body.password = await bcrypt.hash(req.body.password, salt);
