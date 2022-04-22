@@ -4,12 +4,17 @@ const _ = require("lodash");
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 
-router.get("/:productId", async (req, res) => {
+router.get("/:productId", auth, async (req, res) => {
+  const store = await Store.findByPk(req.params.storeId);
+  if (!store || store.userId !== req.user.id)
+    return res
+      .status(404)
+      .send({ message: "Store with the given ID doesn't exist" });
   const product = await Product.findByPk(req.params.productId, {
     include: { model: Image, as: "images" },
     attributes: { exclude: "imageId" },
   });
-  if (!product)
+  if (!product || product.storeId !== parseInt(req.params.storeId))
     return res
       .status(404)
       .send({ message: "Product with given ID doesn't exist" });
