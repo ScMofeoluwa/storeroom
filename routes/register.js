@@ -1,7 +1,7 @@
 const { User } = require("../models");
 const { sendMail } = require("../utils/sendMail");
 const _ = require("lodash");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const express = require("express");
 const router = express.Router();
 
