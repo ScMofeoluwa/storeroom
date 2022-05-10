@@ -10,7 +10,8 @@
     "db:g:migration": "sequelize-cli migration:generate --name",
     "db:g:seed": "sequelize-cli seed:generate --name",
     "db:seeds": "sequelize-cli db:seed:all",
-    "test": "jest --watchAll --verbose --coverage --maxWorkers=1"
+    "test": "jest --watchAll --verbose --maxWorkers=1",
+    "test:cov": "jest --coverage"
   },
   "author": "",
   "license": "ISC",
