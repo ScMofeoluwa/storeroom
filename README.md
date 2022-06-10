@@ -28,7 +28,7 @@ $ npm run db:migrate
 # generate seeds
 $ npm run db:seeds
 
-#run the app
+# run the app
 $ npm run dev
 ```
 
