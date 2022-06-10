@@ -15,10 +15,20 @@ $ npm install
 ## Running the app
 
 - Create a `.env` file in the project's directory
-- Copy the contents of the `.env.example` into `.env` 
+- Copy the contents of the `.env.example` into `.env`
 - Edit the variables
 
 ```bash
+# create database
+$ npm run db:create
+
+# migrate database
+$ npm run db:migrate
+
+# generate seeds
+$ npm run db:seeds
+
+#run the app
 $ npm run dev
 ```
 
