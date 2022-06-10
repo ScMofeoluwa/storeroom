@@ -8,7 +8,7 @@ const config = require("../config/config.js")[env];
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      this.hasMany(models.Store, {
+      User.hasMany(models.Store, {
         foreignKey: "userId",
         as: "stores",
         onDelete: "CASCADE",
