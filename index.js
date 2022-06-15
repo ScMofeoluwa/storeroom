@@ -10,6 +10,7 @@ const stores = require("./routes/store");
 const products = require("./routes/product");
 const images = require("./routes/image");
 const orders = require("./routes/order");
+const payments = require("./routes/payment");
 
 const app = express();
 const port = process.env.PORT;
@@ -23,6 +24,7 @@ app.use("/api/stores", stores);
 app.use("/api/:storeId/products", products);
 app.use("/api/:storeId/products/:productId/image", images);
 app.use("/api/order", orders);
+app.use("/api/payment", payments);
 
 app.use(morganMiddleware);
 
