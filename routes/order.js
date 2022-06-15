@@ -54,23 +54,4 @@ router.post("/", async (req, res) => {
   return res.status(200).send(data);
 });
 
-router.get("/paystack/callback", async (req, res) => {
-  const txnRef = req.query.trxref;
-  const data = await paystack.verifyPayment(txnRef);
-
-  if (!data) return res.send({ message: "Transaction not found" });
-
-  if (data.data.status === "failed") {
-    let order = await Order.findOne({ where: { txnRef: txnRef } });
-    order.status = "failed";
-    await order.save();
-    return res.send({ message: "Payment failed" });
-  } else {
-    let order = await Order.findOne({ where: { txnRef: txnRef } });
-    order.status = "success";
-    await order.save();
-    return res.send({ message: "Payment successful" });
-  }
-});
-
 module.exports = router;
