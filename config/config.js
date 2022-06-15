@@ -33,6 +33,13 @@ module.exports = {
     secret: process.env.SECRET_KEY,
     rtSecret: process.env.REFRESH_TOKEN_SECRET,
     veriSecret: process.env.VERIFICATION_SECRET,
+    paystackCbUrl: process.env.PAYSTACK_CALLBACK_URL,
+    paystackSecret: process.env.PAYSTACK_TEST_SECRET,
+    cloudinaryKey: process.env.CLOUDINARY_API_KEY,
+    cloudinarySecret: process.env.CLOUDINARY_API_SECRET,
+    cloudName: process.env.CLOUD_NAME,
+    mailUser: process.env.MAIL_USER,
+    mailPass: process.env.MAIL_PASS,
   },
   production: {
     use_env_variable: "DATABASE_URL",
